@@ -1,0 +1,38 @@
+{
+  "name": "codemash2014",
+  "version": "0.0.1",
+  "description": "Tame Your Frontend Stack with gulp.js",
+  "homepage": "https://github.com/bengladwell/codemash2014",
+  "scripts": {
+    "start": ""
+  },
+  "author": {
+    "name": "Ben Gladwell",
+    "email": "bengladwell@gmail.com",
+    "web": "http://www.bengladwell.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bengladwell/codemash2014.git"
+  },
+  "engines": {
+    "node": "~0.10.0"
+  },
+  "dependencies": {
+    "underscore": "~1.5.1",
+    "express": "~2.5.9",
+    "mustache": "~0.7.2",
+    "socket.io": "~0.9.13"
+  },
+  "devDependencies": {
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-connect": "~0.4.1",
+    "grunt": "~0.4.0"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/bengladwell/codemash2014/blob/master/LICENSE"
+    }
+  ]
+}
