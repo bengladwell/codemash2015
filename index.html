@@ -64,31 +64,77 @@
         </section>
 
         <section>
-          <h3>Stuff we might need</h3>
+          <h2>Why?</h2>
           <ul>
-            <li class="fragment">3rd-party package management</li>
+            <li class="fragment">The web platform is complicated</li>
+            <li class="fragment">Node, npm, and the Unix philosophy</li>
+            <li class="fragment">Bats and moths</li>
+          </ul>
+        </section>
+
+        <section>
+          <img src="/img/bat_moth.jpg" alt="Bat vs Moth">
+        </section>
+
+        <section>
+          <h3>Useful frontend stuff</h3>
+          <ul>
+            <li class="fragment">3rd-party JS package management</li>
             <li class="fragment">JS MV* framework</li>
-            <li class="fragment">JS template library</li>
+            <li class="fragment">Precompiled templates</li>
             <li class="fragment">JS module system</li>
             <li class="fragment">CSS precompiler</li>
-            <li class="fragment">JS code linting</li>
+            <li class="fragment">Productivity: JS code linting</li>
+            <li class="fragment">Productivity: Automatic code reloading</li>
             <li class="fragment">Test runner, assertion library, mock library</li>
           </ul>
         </section>
 
-        <!-- Goal: create draggable refrigerator words game -->
-
         <section>
-          insert here: beard poet
+          <h3>Useful frontend stuff</h3>
+          <ul>
+            <li>3rd-party JS package management <strong>(Bower)</strong></li>
+            <li>JS MV* framework <strong>(Backbone)</strong></li>
+            <li>Precompiled templates <strong>(Handlebars)</strong></li>
+            <li>JS module system <strong>(CommonJS/Browserify)</strong></li>
+            <li>CSS precompiler <strong>(Less)</strong></li>
+            <li>Productivity: JS code linting <strong>(JSHint)</strong></li>
+            <li>Productivity: Automatic code reloading <strong>(Gulp watch)</strong></li>
+            <li>Test runner, assertion library, mock library <strong>(Testem, Mocha, Sinon)</strong></li>
+          </ul>
         </section>
 
         <section>
-          <h2>DIY</h2>
+          <h2>5 stages of dealing with frontend tooling</h2>
+          <ul>
+            <li class="fragment">Denial</li>
+            <li class="fragment">Anger</li>
+            <aside class="notes">
+              Our friend from reddit seemed to be here
+            </aside>
+            <li class="fragment">Bargaining</li>
+            <aside class="notes">
+              Custom bash scripts, Codekit, Livereload Chrome extension
+            </aside>
+            <li class="fragment">Depression</li>
+            <aside class="notes">
+              Come to CodeMash
+            </aside>
+            <li class="fragment">Acceptance</li>
+          </ul>
         </section>
 
         <section id="gulp-img">
             <img src="http://gruntjs.com/img/grunt-logo.svg" alt="grunt.js"/>
 						<img src="http://www.bengladwell.com/content/images/2014/Aug/gulp-2x.png" alt="gulp.js"/>
+        </section>
+
+        <section id="gulp-img">
+						<img src="http://www.bengladwell.com/content/images/2014/Aug/gulp-2x.png" alt="gulp.js"/>
+        </section>
+
+        <section>
+          <img src="/img/beardpoet.jpg" alt="Beard Poet">
         </section>
 
         <section>
@@ -100,7 +146,7 @@
         </section>
 
         <section>
-          <h2>3rd-party package management</h2>
+          <h2>3rd-party JS package management</h2>
           <h1>Bower</h1>
           bower init
           bower install --save jquery-ui
@@ -115,7 +161,7 @@
         </section>
 
         <section>
-          <h2>Enter Backbone</h2>
+          <h2>Bower example: Backbone</h2>
           bower install --save backbone
           - npm install --save-dev gulp-rename gulp-uglify
           - add vendor task
@@ -128,7 +174,7 @@
           - where to start?
           - build modular
           - tree structure; top most node is the module that kicks everything off; this is the one with $(function () {...
-          - CommonJS
+          - CommonJS vs AMD
           - client/app.js
         </section>
 
@@ -145,6 +191,7 @@
           - LayoutView needs a template
           <h4>Enter Handlebars</h4>
           - explain precompiled templates
+          - aside re: Grunt Handlebars plugin
           - bower install --save handlebars
           - bower.json override (for runtime only)
           - npm install --save-dev gulp-handlebars
@@ -163,16 +210,18 @@
         </section>
 
         <section>
-          <h2>Livereload</h2>
+          <h2>Productivity</h2>
+          <h3>Livereload</h3>
           - gulp.watch
           - npm install --save-dev gulp-livereload
           - add task
           - demonstrate; change less file; add to template
+          <h3>linting</h3>
+          - simulate syntax error; draw attention to helpfulness of linting
         </section>
 
         <section>
-          <h2>lint</h2>
-          - simulate syntax error; draw attention to helpfulness of linting
+          <h2>Testing</h2>
         </section>
 
       </div>
