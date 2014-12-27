@@ -1,89 +1,216 @@
 <!doctype html>
 <html lang="en">
 
-	<head>
-		<meta charset="utf-8">
+  <head>
+    <meta charset="utf-8">
 
-		<title>reveal.js - The HTML Presentation Framework</title>
+    <title>Tame Your Frontend Stack with gulp.js</title>
 
-		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
-		<meta name="author" content="Hakim El Hattab">
+    <meta name="description" content="Use gulp.js to organize your frontend sprawl">
+    <meta name="author" content="Ben Gladwell">
 
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link rel="stylesheet" href="css/reveal.min.css">
-		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/default.css" id="theme">
 
-		<!-- For syntax highlighting -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+    <link rel="stylesheet" href="css/codemash2014.css">
 
-		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
-		<script>
-			if( window.location.search.match( /print-pdf/gi ) ) {
-				var link = document.createElement( 'link' );
-				link.rel = 'stylesheet';
-				link.type = 'text/css';
-				link.href = 'css/print/pdf.css';
-				document.getElementsByTagName( 'head' )[0].appendChild( link );
-			}
-		</script>
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
 
-		<!--[if lt IE 9]>
-		<script src="lib/js/html5shiv.js"></script>
-		<![endif]-->
-	</head>
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+      if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+      }
+    </script>
 
-	<body>
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
 
-		<div class="reveal">
+  <body>
 
-			<!-- Any section element inside of this container is displayed as a slide -->
-			<div class="slides">
-				<section>
-					<h1>Tame Your Frontend Stack with gulp.js</h1>
-				</section>
-                <section>
-                    <h2>Frontend is hard</h2>
-                </section>
-			</div>
+    <div class="reveal">
 
-		</div>
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.min.js"></script>
+        <section>
+          <h1>Tame Your Frontend Stack with gulp.js</h1>
+        </section>
 
-		<script>
+        <section>
+          <h2>Frontend is hard</h2>
+          <aside class="notes">
+            Alternative work flows; custom bash scripts; CodeKit
+          </aside>
+        </section>
 
-			// Full list of configuration options available here:
-			// https://github.com/hakimel/reveal.js#configuration
-			Reveal.initialize({
-				controls: true,
-				progress: true,
-				history: true,
-				center: true,
+        <section>
+          <blockquote cite="http://www.reddit.com/r/programming/comments/2kl88s/angular_20_drastically_different/clml1hj">
+            As many others here have observed, fashionable webdev now is beyond a joke; I'm seriously glad I got out of it when I did. Once you're forced to actually deal with this nonsense you either run screaming for the exits or go insane. It's not even fragmentation, it's fragmentation cubed... I don't understand. I don't understand why anyone thinks this is a good idea. I've seen code produced by people using this stuff, and it's just unbelievably awful. They shovel together this giant spaghetti turd without understanding any of the components involved, because nobody has time to understand anything when it changes every thirty seconds...
+          </blockquote>
+          <p>othermike - <a href="http://www.reddit.com/r/programming/comments/2kl88s/angular_20_drastically_different/clml1hj">reddit</a></p>
+        </section>
 
-				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+        <section>
+          <h3>Stuff we might need</h3>
+          <ul>
+            <li class="fragment">3rd-party package management</li>
+            <li class="fragment">JS MV* framework</li>
+            <li class="fragment">JS template library</li>
+            <li class="fragment">JS module system</li>
+            <li class="fragment">CSS precompiler</li>
+            <li class="fragment">JS code linting</li>
+            <li class="fragment">Test runner, assertion library, mock library</li>
+          </ul>
+        </section>
 
-				// Parallax scrolling
-				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
-				// parallaxBackgroundSize: '2100px 900px',
+        <!-- Goal: create draggable refrigerator words game -->
 
-				// Optional libraries used to extend on reveal.js
-				dependencies: [
-					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
-				]
-			});
+        <section>
+          insert here: beard poet
+        </section>
 
-		</script>
+        <section>
+          <h2>DIY</h2>
+        </section>
 
-	</body>
+        <section id="gulp-img">
+            <img src="http://gruntjs.com/img/grunt-logo.svg" alt="grunt.js"/>
+						<img src="http://www.bengladwell.com/content/images/2014/Aug/gulp-2x.png" alt="gulp.js"/>
+        </section>
+
+        <section>
+          <h2>Server side: Node/Express</h2>
+          npm init
+          npm install --save express
+          npm install --save express-hbs
+          Directory layout:
+        </section>
+
+        <section>
+          <h2>3rd-party package management</h2>
+          <h1>Bower</h1>
+          bower init
+          bower install --save jquery-ui
+          goal: vendor.js that contains all 3rd party dependencies in necessary load order
+          npm install --save-dev gulp
+          npm install --save-dev gulp-concat
+          npm install --save-dev main-bower-files
+          create gulpfile with simple "bower" task
+          - we don't want to ship unminified vendor code; we prefer to use upstream minified code
+          - add overrides to bower.json for jquery and jquery-ui
+          - make change to gulpfile.js
+        </section>
+
+        <section>
+          <h2>Enter Backbone</h2>
+          bower install --save backbone
+          - npm install --save-dev gulp-rename gulp-uglify
+          - add vendor task
+          - add vendor dependency to bower task
+          - add minified overrides to bower.json
+        </section>
+
+        <section>
+          <h2>Let's start building</h2>
+          - where to start?
+          - build modular
+          - tree structure; top most node is the module that kicks everything off; this is the one with $(function () {...
+          - CommonJS
+          - client/app.js
+        </section>
+
+        <section>
+          <h2>Browserify</h2>
+          - app.js, Layout.js, App.js (router)
+          - npm install --save-dev gulp-browserify
+          - explain benefits of "require" build - unused code never in build
+        </section>
+
+        <section>
+          <h2>Templates</h2>
+          - commit: needs templates
+          - LayoutView needs a template
+          <h4>Enter Handlebars</h4>
+          - explain precompiled templates
+          - bower install --save handlebars
+          - bower.json override (for runtime only)
+          - npm install --save-dev gulp-handlebars
+          - module.exports problem
+          - npm install --save-dev gulp-wrap
+          - add templates task as dependency to browserify task
+        </section>
+
+        <section>
+          <h2>Style</h2>
+          - Bootstrap
+          - Less
+          - bower install --save bootstrap
+          - npm install --save-dev gulp-less
+          - gulp less task
+        </section>
+
+        <section>
+          <h2>Livereload</h2>
+          - gulp.watch
+          - npm install --save-dev gulp-livereload
+          - add task
+          - demonstrate; change less file; add to template
+        </section>
+
+        <section>
+          <h2>lint</h2>
+          - simulate syntax error; draw attention to helpfulness of linting
+        </section>
+
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+
+  </body>
 </html>
