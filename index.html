@@ -78,30 +78,30 @@
 
         <section>
           <h3>Useful frontend stuff</h3>
-          <ul>
-            <li class="fragment">3rd-party JS package management</li>
-            <li class="fragment">JS MV* framework</li>
-            <li class="fragment">Precompiled templates</li>
-            <li class="fragment">JS module system</li>
-            <li class="fragment">CSS precompiler</li>
-            <li class="fragment">Productivity: JS code linting</li>
-            <li class="fragment">Productivity: Automatic code reloading</li>
-            <li class="fragment">Test runner, assertion library, mock library</li>
-          </ul>
+          <table>
+            <tr class="fragment"><td>3rd-party JS package management</td><td></td></tr>
+            <tr class="fragment"><td>JS MV* framework</td><td></td></tr>
+            <tr class="fragment"><td>Precompiled templates</td><td></td></tr>
+            <tr class="fragment"><td>JS module system</td><td></td></tr>
+            <tr class="fragment"><td>CSS precompiler</td><td></td></tr>
+            <tr class="fragment"><td>Productivity: JS code linting</td><td></td></tr>
+            <tr class="fragment"><td>Productivity: Automatic code reloading</td><td></td></tr>
+            <tr class="fragment"><td>Test runner, assertion library, mock library</td><td></td></tr>
+          </table>
         </section>
 
         <section>
           <h3>Useful frontend stuff</h3>
-          <ul>
-            <li>3rd-party JS package management <strong>(Bower)</strong></li>
-            <li>JS MV* framework <strong>(Backbone)</strong></li>
-            <li>Precompiled templates <strong>(Handlebars)</strong></li>
-            <li>JS module system <strong>(CommonJS/Browserify)</strong></li>
-            <li>CSS precompiler <strong>(Less)</strong></li>
-            <li>Productivity: JS code linting <strong>(JSHint)</strong></li>
-            <li>Productivity: Automatic code reloading <strong>(Gulp watch)</strong></li>
-            <li>Test runner, assertion library, mock library <strong>(Testem, Mocha, Sinon)</strong></li>
-          </ul>
+          <table>
+            <tr><td>3rd-party JS package management</td><td>Bower</td></tr>
+            <tr><td>JS MV* framework</td><td>Backbone</td></tr>
+            <tr><td>Precompiled templates</td><td>Handlebars</td></tr>
+            <tr><td>JS module system</td><td>CommonJS/Browserify</td></tr>
+            <tr><td>CSS precompiler</td><td>Less</td></tr>
+            <tr><td>Productivity: JS code linting</td><td>JSHint</td></tr>
+            <tr><td>Productivity: Automatic code reloading</td><td>Gulp watch</td></tr>
+            <tr><td>Test runner, assertion library, mocking</td><td>Testem, Mocha, Sinon</td></tr>
+          </table>
         </section>
 
         <section>
@@ -134,7 +134,63 @@
         </section>
 
         <section>
-          <img src="/img/beardpoet.jpg" alt="Beard Poet">
+          <h2>Test project</h2>
+          <img class="fragment" src="/img/beardpoet.jpg" alt="Beard Poet">
+          <ul>
+            <li><a class="fragment" href="https://github.com/bengladwell/fridgewords">github: bengladwell/fridgewords</a></li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Setup</h2>
+          <ul>
+            <li class="fragment">You need node</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Setup</h2>
+          <h4>npm</h4>
+          <div>
+            <pre><code class="bash" data-trim>
+# npm init
+
+# npm install --save express
+# npm install --save express-hbs
+# npm install --save serve-static
+            </code></pre>
+          </div>
+        </section>
+
+        <section>
+          <h2>Setup</h2>
+          <h4>package.json</h4>
+          <pre><code class="json" data-trim>
+{
+  "name": "fridgewords",
+  "version": "0.0.1",
+  "description": "CodeMash 2015 - how to do frontend with gulp.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bengladwell/fridgewords.git"
+  },
+  "author": "Ben Gladwell",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bengladwell/fridgewords/issues"
+  },
+  "homepage": "https://github.com/bengladwell/fridgewords",
+  "dependencies": {
+    "express": "^4.10.6",
+    "express-hbs": "^0.7.11",
+    "serve-static": "^1.7.1"
+  }
+}
+          </code></pre>
         </section>
 
         <section>
@@ -222,6 +278,14 @@
 
         <section>
           <h2>Testing</h2>
+          npm install --save-dev testem mocha chai sinon
+        </section>
+
+        <section>
+          <h2>Other considerations</h2>
+          shrink wrap
+          plumber
+          no-templates
         </section>
 
       </div>

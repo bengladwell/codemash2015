@@ -2,3 +2,8 @@
     margin: 10px;
     background-color: #fff;
 }
+
+.reveal pre code.bash {
+    font-size: 2em;
+    line-height: 1.2;
+}
