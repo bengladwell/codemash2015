@@ -136,35 +136,29 @@
         <section>
           <h2>Test project</h2>
           <img class="fragment" src="/img/beardpoet.jpg" alt="Beard Poet">
-          <ul>
-            <li><a class="fragment" href="https://github.com/bengladwell/fridgewords">github: bengladwell/fridgewords</a></li>
-          </ul>
-        </section>
-
-        <section>
-          <h2>Setup</h2>
-          <ul>
-            <li class="fragment">You need node</li>
-          </ul>
-        </section>
-
-        <section>
-          <h2>Setup</h2>
-          <h4>npm</h4>
-          <div>
-            <pre><code class="bash" data-trim>
-# npm init
-
-# npm install --save express
-# npm install --save express-hbs
-# npm install --save serve-static
-            </code></pre>
+          <div class="fragment">
+            <a href="https://github.com/bengladwell/fridgewords">github: bengladwell/fridgewords</a>
           </div>
         </section>
 
+        <section data-background="/img/nodejs.png">
+        </section>
+
         <section>
-          <h2>Setup</h2>
-          <h4>package.json</h4>
+          <h4>Setup</h4>
+          <h2>npm</h2>
+          <pre><code class="bash" data-trim>
+$ npm init
+
+$ npm install --save express
+$ npm install --save express-hbs
+$ npm install --save serve-static
+          </code></pre>
+        </section>
+
+        <section>
+          <h4>Setup</h4>
+          <h2>package.json</h2>
           <pre><code class="json" data-trim>
 {
   "name": "fridgewords",
@@ -194,66 +188,372 @@
         </section>
 
         <section>
-          <h2>Server side: Node/Express</h2>
-          npm init
-          npm install --save express
-          npm install --save express-hbs
-          Directory layout:
+          <h4>Simple Express</h4>
+          <h2>index.js</h2>
+          <pre><code class="js" data-trim>
+"use strict";
+
+var express = require('express'),
+  serveStatic = require('serve-static'),
+  hbs = require('express-hbs'),
+  app = express();
+
+app.engine('hbs', hbs.express3());
+app.set('views', __dirname + '/server/views');
+app.set('view engine', 'hbs');
+
+app.use(serveStatic(__dirname + '/public'));
+
+app.get('/*', function (req, res, next) {
+  res.render('app');
+});
+
+app.listen(3000, 'localhost', function () {
+  console.log('Listening at http://localhost:3000');
+});
+          </code></pre>
         </section>
 
         <section>
-          <h2>3rd-party JS package management</h2>
-          <h1>Bower</h1>
-          bower init
-          bower install --save jquery-ui
-          goal: vendor.js that contains all 3rd party dependencies in necessary load order
-          npm install --save-dev gulp
-          npm install --save-dev gulp-concat
-          npm install --save-dev main-bower-files
-          create gulpfile with simple "bower" task
-          - we don't want to ship unminified vendor code; we prefer to use upstream minified code
-          - add overrides to bower.json for jquery and jquery-ui
-          - make change to gulpfile.js
+          <h4>Simple Express</h4>
+          <h2>static HTML</h2>
+          <pre><code class="hbs" data-trim>
+&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+
+  &lt;head&gt;
+    <meta charset='utf-8'/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fridgewords</title>
+  &lt;/head&gt;
+
+  &lt;body&gt;
+    <script type="text/javascript" src="/js/app.js"></script>
+  &lt;/body&gt;
+
+&lt;/html&gt;
+          </code></pre>
         </section>
 
         <section>
-          <h2>Bower example: Backbone</h2>
-          bower install --save backbone
-          - npm install --save-dev gulp-rename gulp-uglify
-          - add vendor task
-          - add vendor dependency to bower task
-          - add minified overrides to bower.json
+          <h2>Get started with gulp</h2>
+          <pre><code class="bash" data-trim>
+$ npm install -g gulp
+$ npm install --save-dev gulp
+          </code></pre>
+        </section>
+
+        <section>
+          <h4>3rd-party JS package management</h4>
+          <h2>?</h2>
+        </section>
+
+        <section data-background="/img/bower-logo.png" data-background-size="50%">
+          <h4>3rd-party JS package management</h4>
+          <h2>Bower</h2>
+          <aside class="notes">
+            Benefits:
+            - known location for all 3rd-party js packages (bower_components)
+            - easy way to update 3rd-party js packages
+            - bower's standard configuration format allows us to automate script assembly in dependency order (using gulp)
+          </aside>
+        </section>
+
+        <section>
+          <h2>Goal: automate 3rd-party script assembly</h2>
+          <pre>
+|-- bower_components
+|   |-- backbone
+|   |   `-- backbone.js
+|   |-- underscore
+|   |   `-- underscore.js
+|   `-- jquery
+|      `-- jquery.js
+|
+|-- public
+    `-- js
+        `-- vendor.js
+          </pre>
+        </section>
+
+        <section>
+          <h4>Bower setup</h4>
+          <pre><code class="bash" data-trim>
+$ npm install -g bower
+
+$ bower init
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Bower example: jquery-ui</h2>
+          <pre><code class="bash" data-trim>
+$ bower install --save jquery-ui
+$ npm install --save-dev gulp-concat
+$ npm install --save-dev main-bower-files
+          </code></pre>
+        </section>
+
+        <section>
+          <h4>gruntfile.js</h4>
+          <pre><code class="js" data-trim>
+"use strict";
+
+var gulp = require('gulp'),
+  concat = require('gulp-concat'),
+  mbf = require('main-bower-files');
+
+gulp.task('bower', function () {
+  gulp.src(mbf().filter(function (f) { return f.substr(-2) === 'js'; }))
+    .pipe(concat('vendor.js')
+    .pipe(gulp.dest('public/js/'));
+});
+          </code></pre>
+        </section>
+
+        <section>
+          <h4>static HTML</h4>
+          <pre><code class="hbs" data-trim>
+&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+
+  &lt;head&gt;
+    <meta charset='utf-8'/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fridgewords</title>
+  &lt;/head&gt;
+
+  &lt;body&gt;
+    <script type="text/javascript" src="/js/vendor.js"></script>
+    <script type="text/javascript" src="/js/app.js"></script>
+  &lt;/body&gt;
+
+&lt;/html&gt;
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Bonus: minified on production</h2>
         </section>
 
         <section>
           <h2>Let's start building</h2>
-          - where to start?
-          - build modular
-          - tree structure; top most node is the module that kicks everything off; this is the one with $(function () {...
-          - CommonJS vs AMD
-          - client/app.js
+          <pre><code class="js" data-trim>
+$(function () {
+  var availableWordsView = new AvailableWordsView();
+  $('body').append(availableWordsView.render().el);
+});
+          </code></pre>
+          <p class="fragment">Where to put the definition of AvailableWordsView?</p>
+        </section>
+
+        <section>
+          <h2>Let's start building</h2>
+          <pre><code class="js" data-trim>
+var App = {};
+App.Views = {};
+App.Views.AvailableWordsView = Backbone.View.extend({
+...
+});
+          </code></pre>
+          <h1 class="fragment">BAD!</h1>
+        </section>
+
+        <section>
+          <h2>Let's start building</h2>
+          <h4 class="fragment">AMD/RequireJS</h4>
+          <h1 class="fragment">CommonJS/Browserify</h1>
+        </section>
+
+        <section>
+          <h2>Let's start building</h2>
+          <p>src/js/app.js</p>
+          <pre><code class="js" data-trim>
+(function () {
+  "use strict";
+
+  var $ = window.jQuery,
+    Backbone = window.Backbone,
+    LayoutView = require('./views/Layout'),
+    AppRouter = require('./routers/App');
+
+  $(function () {
+    var layoutView = new LayoutView(),
+      router = new AppRouter({
+        layout: layoutView
+      });
+
+    $('body').append(layoutView.render().el);
+
+    if (!Backbone.history.start({pushState: true})) {
+      router.navigate("", {trigger: true});
+    }
+  });
+
+}());
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Let's start building</h2>
+          <p>src/js/app.js</p>
+          <pre><code class="js" data-trim>
+(function () {
+  "use strict";
+
+  var _ = window._,
+    Backbone = window.Backbone,
+    GameView = require('../views/Game'),
+    SettingsView = require('../views/Settings'),
+    AvailableWordsCollection = require('../collections/AvailableWords'),
+    PhrasesCollection = require('../collections/Phrases');
+
+  module.exports = Backbone.Router.extend({
+
+    initialize: function (options) {
+      _.extend(this, _.pick(options, 'layout'));
+    },
+
+    routes: {
+      "": "game",
+      "settings": "settings"
+    },
+
+    game: function () {
+      var availableWordsCollection = new AvailableWordsCollection(),
+        phrasesCollection = new PhrasesCollection();
+
+      Backbone.$.when([availableWordsCollection.fetch(), phrasesCollection.fetch()]).then(_.bind(function () {
+
+        this.layout.setView(new GameView({
+          available: availableWordsCollection,
+          phrases: phrasesCollection
+        }), { linkTo: GameView.linkTo });
+
+      }, this));
+
+    },
+
+    settings: function () {
+      this.layout.setView(new SettingsView(), { linkTo: SettingsView.linkTo });
+    }
+
+  });
+
+}());
+          </code></pre>
         </section>
 
         <section>
           <h2>Browserify</h2>
-          - app.js, Layout.js, App.js (router)
-          - npm install --save-dev gulp-browserify
-          - explain benefits of "require" build - unused code never in build
+          <pre><code class="bash" data-trim>
+$ npm install --save-dev gulp-browserify
+          </code></pre>
         </section>
 
         <section>
-          <h2>Templates</h2>
-          - commit: needs templates
-          - LayoutView needs a template
-          <h4>Enter Handlebars</h4>
-          - explain precompiled templates
-          - aside re: Grunt Handlebars plugin
-          - bower install --save handlebars
-          - bower.json override (for runtime only)
-          - npm install --save-dev gulp-handlebars
-          - module.exports problem
-          - npm install --save-dev gulp-wrap
-          - add templates task as dependency to browserify task
+          <h2>Browserify</h2>
+          <pre><code class="js" data-trim>
+...
+  browserify = require('gulp-browserify');
+
+...
+gulp.task('browserify', function () {
+  return gulp.src(['src/js/app.js'])
+    .pipe(browserify({
+      debug: true
+    }))
+    .pipe(gulp.dest('public/js/'));
+});
+          </code></pre>
+
+          <aside class="notes">
+            explain benefits of "require" build - unused code never in build
+            show source maps
+          </aside>
+        </section>
+
+        <section>
+          <h2>Precompiled Templates</h2>
+          <aside class="notes">
+            benefits of precompilation; smaller vendor js, faster app
+          </aside>
+          <h4 class="fragment">Handlebars template in Layout View</h4>
+          <pre class="fragment"><code class="js" data-trim>
+var Backbone = window.Backbone,
+  template = require('../templates/layout');
+
+module.exports = Backbone.View.extend({
+...
+  render: function () {
+    this.$el.html(template());
+    return this;
+  }
+
+});
+          </code></pre>
+          <aside class="notes">
+            assumptions in grunt-contrib-handlebars vs gulp way
+          </aside>
+        </section>
+
+        <section>
+          <h4>Precompiled hbs templates</h4>
+          <h2>Runtime on the page</h2>
+          <pre><code class="bash" data-trim>
+$ bower install --save handlebars
+          </code></pre>
+          <p class="fragment">bower.json</p>
+          <pre class="fragment"><code class="json" data-trim>
+"overrides": {
+  "handlebars": {
+    "main": "handlebars.runtime.js"
+  }
+}
+          </code></pre>
+          <pre class="fragment"><code class="bash" data-trim>
+$ gulp bower
+          </code></pre>
+        </section>
+
+        <section>
+          <h4>Precompiled hbs templates</h4>
+          <h2>gulp</h2>
+          <pre><code class="bash" data-trim>
+$ npm install --save-dev gulp-handlebars
+$ npm install --save-dev gulp-wrap
+          </code></pre>
+        </section>
+
+        <section>
+          <h4>Precompiled hbs templates</h4>
+          <h2>gulp</h2>
+          <pre><code class="js" data-trim>
+...
+  handlebars = require('gulp-handlebars'),
+  wrap = require('gulp-wrap'),
+...
+gulp.task('templates', function () {
+  return gulp.src('src/hbs/**/*.hbs')
+    .pipe(handlebars())
+    .pipe(wrap('module.exports = Handlebars.template(<%= contents %>);'))
+    .pipe(gulp.dest('src/js/templates/'));
+});
+
+gulp.task('browserify', ['templates'], function () {
+...
+          </code></pre>
+        </section>
+
+        <section>
+          <h4>Precompiled hbs templates</h4>
+          <h2>Sample compiled template module</h2>
+          <p>src/hbs/layout.hbs --&gt; src/js/templates/layout.js</p>
+          <pre class="fragment"><code class="js" data-trim>
+module.exports = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  return "<div class=\"page-header\">\n  <h1>Fridgewords</h1>\n  <div class=\"link-to\"></div>\n</div>\n<div class=\"outlet\">\n</div>\n";
+},"useData":true});
+          </code></pre>
         </section>
 
         <section>
