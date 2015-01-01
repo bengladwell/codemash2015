@@ -12,3 +12,8 @@
     font-size: 2em;
     line-height: 1.2;
 }
+
+.reveal pre.directory {
+    font-size: 1em;
+    line-height: 1.2;
+}

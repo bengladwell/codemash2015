@@ -225,6 +225,7 @@ app.listen(3000, 'localhost', function () {
     <meta charset='utf-8'/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Fridgewords</title>
+    <link href="/css/app.css" rel="stylesheet" type="text/css">
   &lt;/head&gt;
 
   &lt;body&gt;
@@ -244,8 +245,27 @@ $ npm install --save-dev gulp
         </section>
 
         <section>
-          <h4>3rd-party JS package management</h4>
-          <h2>?</h2>
+          <h2>Less (lesscss.org)</h2>
+          <pre class="fragment"><code class="bash">
+$ npm install --save-dev gulp-less
+          </code></pre>
+          <div class="fragment">
+            <p>gulpfile.js</p>
+            <pre><code class="js">
+var gulp = require('gulp'),
+  less = require('gulp-less');
+
+gulp.task('less', function () {
+  return gulp.src('src/less/app.less')
+    .pipe(less())
+    .pipe(gulp.dest('public/css/'));
+});
+            </code></pre>
+          </div>
+        </section>
+
+        <section>
+          <h2>3rd-party JS package management</h2>
         </section>
 
         <section data-background="/img/bower-logo.png" data-background-size="50%">
@@ -261,7 +281,7 @@ $ npm install --save-dev gulp
 
         <section>
           <h2>Goal: automate 3rd-party script assembly</h2>
-          <pre>
+          <pre class="fragment directory">
 |-- bower_components
 |   |-- backbone
 |   |   `-- backbone.js
@@ -277,7 +297,7 @@ $ npm install --save-dev gulp
         </section>
 
         <section>
-          <h4>Bower setup</h4>
+          <h2>Bower setup</h2>
           <pre><code class="bash" data-trim>
 $ npm install -g bower
 
@@ -289,6 +309,9 @@ $ bower init
           <h2>Bower example: jquery-ui</h2>
           <pre><code class="bash" data-trim>
 $ bower install --save jquery-ui
+          </code></pre>
+
+          <pre class="fragment"><code class="bash" data-trim>
 $ npm install --save-dev gulp-concat
 $ npm install --save-dev main-bower-files
           </code></pre>
@@ -321,6 +344,7 @@ gulp.task('bower', function () {
     <meta charset='utf-8'/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Fridgewords</title>
+    <link href="/css/app.css" rel="stylesheet" type="text/css">
   &lt;/head&gt;
 
   &lt;body&gt;
@@ -337,123 +361,124 @@ gulp.task('bower', function () {
         </section>
 
         <section>
-          <h2>Let's start building</h2>
-          <pre><code class="js" data-trim>
+          <h2>Let's start coding our SPA</h2>
+          <pre class="fragment"><code class="js">
 $(function () {
+
   var availableWordsView = new AvailableWordsView();
+
   $('body').append(availableWordsView.render().el);
+
 });
           </code></pre>
           <p class="fragment">Where to put the definition of AvailableWordsView?</p>
         </section>
 
         <section>
-          <h2>Let's start building</h2>
-          <pre><code class="js" data-trim>
+          <h2>A not-so-good approach</h2>
+          <pre class="fragment"><code class="js">
 var App = {};
 App.Views = {};
+
 App.Views.AvailableWordsView = Backbone.View.extend({
 ...
 });
           </code></pre>
-          <h1 class="fragment">BAD!</h1>
         </section>
 
         <section>
-          <h2>Let's start building</h2>
+          <h2>Much better: Modules</h2>
+
           <h4 class="fragment">AMD/RequireJS</h4>
-          <h1 class="fragment">CommonJS/Browserify</h1>
+          <h2 class="fragment">CommonJS / Browserify</h2>
         </section>
 
         <section>
-          <h2>Let's start building</h2>
+          <h2>The root module</h2>
           <p>src/js/app.js</p>
-          <pre><code class="js" data-trim>
-(function () {
-  "use strict";
+          <pre class="fragment"><code class="js" data-trim>
+"use strict";
 
-  var $ = window.jQuery,
-    Backbone = window.Backbone,
-    LayoutView = require('./views/Layout'),
-    AppRouter = require('./routers/App');
+var $ = window.jQuery,
+  Backbone = window.Backbone,
+  LayoutView = require('./views/Layout'),
+  AppRouter = require('./routers/App');
 
-  $(function () {
-    var layoutView = new LayoutView(),
-      router = new AppRouter({
-        layout: layoutView
-      });
+$(function () {
 
-    $('body').append(layoutView.render().el);
+  var layoutView = new LayoutView(),
+    router = new AppRouter({
+      layout: layoutView
+    });
 
-    if (!Backbone.history.start({pushState: true})) {
-      router.navigate("", {trigger: true});
-    }
-  });
+  $('body').append(layoutView.render().el);
 
-}());
+  if (!Backbone.history.start({pushState: true})) {
+    router.navigate("", {trigger: true});
+  }
+
+});
           </code></pre>
         </section>
 
         <section>
-          <h2>Let's start building</h2>
-          <p>src/js/app.js</p>
-          <pre><code class="js" data-trim>
-(function () {
-  "use strict";
+          <h2>An imported module</h2>
+          <p>src/js/routers/App.js</p>
+          <pre class="fragment"><code class="js" data-trim>
+"use strict";
 
-  var _ = window._,
-    Backbone = window.Backbone,
-    GameView = require('../views/Game'),
-    SettingsView = require('../views/Settings'),
-    AvailableWordsCollection = require('../collections/AvailableWords'),
-    PhrasesCollection = require('../collections/Phrases');
+var _ = window._,
+  Backbone = window.Backbone,
+  GameView = require('../views/Game'),
+  SettingsView = require('../views/Settings'),
+  AvailableWordsCollection = require('../collections/AvailableWords'),
+  PhrasesCollection = require('../collections/Phrases');
 
-  module.exports = Backbone.Router.extend({
+module.exports = Backbone.Router.extend({
 
-    initialize: function (options) {
-      _.extend(this, _.pick(options, 'layout'));
-    },
+  initialize: function (options) {
+    _.extend(this, _.pick(options, 'layout'));
+  },
 
-    routes: {
-      "": "game",
-      "settings": "settings"
-    },
+  routes: {
+    "": "game",
+    "settings": "settings"
+  },
 
-    game: function () {
-      var availableWordsCollection = new AvailableWordsCollection(),
-        phrasesCollection = new PhrasesCollection();
+  game: function () {
+    var availableWordsCollection = new AvailableWordsCollection(),
+      phrasesCollection = new PhrasesCollection();
 
-      Backbone.$.when([availableWordsCollection.fetch(), phrasesCollection.fetch()]).then(_.bind(function () {
+    Backbone.$.when([availableWordsCollection.fetch(), phrasesCollection.fetch()]).then(_.bind(function () {
 
-        this.layout.setView(new GameView({
-          available: availableWordsCollection,
-          phrases: phrasesCollection
-        }), { linkTo: GameView.linkTo });
+      this.layout.setView(new GameView({
+        available: availableWordsCollection,
+        phrases: phrasesCollection
+      }), { linkTo: GameView.linkTo });
 
-      }, this));
+    }, this));
 
-    },
+  },
 
-    settings: function () {
-      this.layout.setView(new SettingsView(), { linkTo: SettingsView.linkTo });
-    }
+  settings: function () {
+    this.layout.setView(new SettingsView(), { linkTo: SettingsView.linkTo });
+  }
 
-  });
-
-}());
+});
           </code></pre>
         </section>
 
         <section>
-          <h2>Browserify</h2>
-          <pre><code class="bash" data-trim>
+          <h2>Browserify all the things</h2>
+          <pre><code class="bash">
 $ npm install --save-dev gulp-browserify
           </code></pre>
         </section>
 
         <section>
-          <h2>Browserify</h2>
-          <pre><code class="js" data-trim>
+          <h2>Browserify all the things</h2>
+          <p>gulpfile.js</p>
+          <pre class="fragment"><code class="js" data-trim>
 ...
   browserify = require('gulp-browserify');
 
@@ -499,12 +524,13 @@ module.exports = Backbone.View.extend({
 
         <section>
           <h4>Precompiled hbs templates</h4>
-          <h2>Runtime on the page</h2>
+          <h2>hbs runtime on the page</h2>
           <pre><code class="bash" data-trim>
 $ bower install --save handlebars
           </code></pre>
           <p class="fragment">bower.json</p>
           <pre class="fragment"><code class="json" data-trim>
+...
 "overrides": {
   "handlebars": {
     "main": "handlebars.runtime.js"
@@ -550,19 +576,78 @@ gulp.task('browserify', ['templates'], function () {
           <h2>Sample compiled template module</h2>
           <p>src/hbs/layout.hbs --&gt; src/js/templates/layout.js</p>
           <pre class="fragment"><code class="js" data-trim>
-module.exports = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+module.exports = Handlebars.template({"compiler":[6,"&gt;= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<div class=\"page-header\">\n  <h1>Fridgewords</h1>\n  <div class=\"link-to\"></div>\n</div>\n<div class=\"outlet\">\n</div>\n";
 },"useData":true});
           </code></pre>
         </section>
 
         <section>
-          <h2>Style</h2>
-          - Bootstrap
-          - Less
-          - bower install --save bootstrap
-          - npm install --save-dev gulp-less
-          - gulp less task
+          <h2>Productivity: <span class="fragment">Automatic builds</span></h2>
+          <div class="fragment">
+            <p>gulpfile.js</p>
+            <pre><code class="js" data-trim>
+gulp.task('watch', ['browserify', 'less'], function () {
+
+  gulp.watch(['src/js/**/*.js'], [ 'browserify' ]);
+  gulp.watch('src/less/**/*.less', [ 'less' ]);
+  gulp.watch('src/hbs/**/*.hbs', [ 'templates' ]);
+
+});
+            </code></pre>
+          </div>
+        </section>
+
+        <section>
+          <h2>Productivity: <span class="fragment">Livereload</span></h2>
+          <pre class="fragment"><code class="bash" data-trim>
+$ npm install --save-dev gulp-livereload
+          </code></pre>
+          <div class="fragment">
+            <p>gulpfile.js</p>
+            <pre><code class="js" data-trim>
+...
+  livereload = require('gulp-livereload');
+...
+gulp.task('watch', ['browserify', 'less'], function () {
+
+  gulp.watch(['src/js/**/*.js'], [ 'browserify' ]);
+  gulp.watch('src/less/**/*.less', [ 'less' ]);
+  gulp.watch('src/hbs/**/*.hbs', [ 'templates' ]);
+
+  livereload.listen();
+  gulp.watch('public/**').on('change', livereload.changed);
+
+});
+            </code></pre>
+          </div>
+        </section>
+
+        <section>
+          <h2>Productivity: Livereload</h2>
+          <p>Add to livereload.js to the page (node)</p>
+          <pre class="fragment"><code class="bash" data-trim>
+$ npm install --save-dev connect-livereload
+          </code></pre>
+          <div class="fragment">
+            <p>index.js</p>
+            <pre><code class="js" data-trim>
+...
+if (app.get('env') === 'development') {
+  app.use(require('connect-livereload')());
+}
+...
+            </code></pre>
+          </div>
+          <div class="fragment">
+            <p>Launch:</p>
+            <pre><code class="bash" data-trim>
+$ NODE_ENV=development node index.js
+            </code></pre>
+          </div>
+          <aside class="notes">
+            demostrate less, js changes
+          </aside>
         </section>
 
         <section>
@@ -583,6 +668,7 @@ module.exports = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":fu
 
         <section>
           <h2>Other considerations</h2>
+          gulp default
           shrink wrap
           plumber
           no-templates
