@@ -73,7 +73,7 @@
         </section>
 
         <section>
-          <img src="/img/bat_moth.jpg" alt="Bat vs Moth">
+          <img src="img/bat_moth.jpg" alt="Bat vs Moth">
         </section>
 
         <section>
@@ -125,23 +125,23 @@
         </section>
 
         <section id="gulp-img">
-            <img src="http://gruntjs.com/img/grunt-logo.svg" alt="grunt.js"/>
-						<img src="http://www.bengladwell.com/content/images/2014/Aug/gulp-2x.png" alt="gulp.js"/>
+            <img src="img/grunt-logo.svg" alt="grunt.js"/>
+            <img src="img/gulp-2x.png" alt="gulp.js"/>
         </section>
 
         <section id="gulp-img">
-						<img src="http://www.bengladwell.com/content/images/2014/Aug/gulp-2x.png" alt="gulp.js"/>
+            <img src="img/gulp-2x.png" alt="gulp.js"/>
         </section>
 
         <section>
           <h2>Test project</h2>
-          <img class="fragment" src="/img/beardpoet.jpg" alt="Beard Poet">
+          <img class="fragment" src="img/beardpoet.jpg" alt="Beard Poet">
           <div class="fragment">
             <a href="https://github.com/bengladwell/fridgewords">github: bengladwell/fridgewords</a>
           </div>
         </section>
 
-        <section data-background="/img/nodejs.png">
+        <section data-background="img/nodejs.png">
         </section>
 
         <section>
@@ -268,7 +268,7 @@ gulp.task('less', function () {
           <h2>3rd-party JS package management</h2>
         </section>
 
-        <section data-background="/img/bower-logo.png" data-background-size="50%">
+        <section data-background="img/bower-logo.png" data-background-size="50%">
           <h4>3rd-party JS package management</h4>
           <h2>Bower</h2>
           <aside class="notes">
@@ -676,7 +676,67 @@ gulp.task('browserify', ['jshint', 'templates'], function () {
 
         <section>
           <h2>Testing</h2>
-          npm install --save-dev testem mocha chai sinon
+          <pre class="fragment"><code class="bash">
+$ npm install --save-dev testem
+$ npm install --save-dev mocha
+$ npm install --save-dev chai
+$ npm install --save-dev sinon
+          </code></pre>
+          <h3 class="fragment">Also: phantomjs</h3>
+          <aside class="notes">
+              testem: a test runner
+              mocha: a test framework (describe - before, it)
+              chai: BDD/TDD assertion library
+              sinon: test spies, stubs, and mocks
+          </aside>
+        </section>
+
+        <section>
+          <h2>Testing</h2>
+          <p>src/js/tests/unit/routers/App.js</p>
+          <pre class="fragment"><code class="js">
+describe('routers/App', function () {
+  "use strict";
+
+  var AppRouter = require('../routers/App'),
+    LayoutView = require('../views/Layout'),
+    GameView = require('../views/Game'),
+    SettingsView = require('../views/Settings'),
+    router;
+
+  beforeEach(function () {
+    router = new AppRouter({
+      layout: new LayoutView()
+    });
+  });
+
+  it('should load a GameView for the root route', function (cb) {
+    // router.game() returns a promise
+    router.game().then(function () {
+      expect(router.layout._view).to.be.instanceOf(GameView);
+      cb();
+    });
+  });
+...
+});
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Testing</h2>
+          <div class="fragment">
+              <p>package.json</p>
+              <pre><code class="json">
+  "scripts": {
+    "test": "node node_modules/testem/testem.js -l PhantomJS"
+  }
+              </code></pre>
+          </div>
+        </section>
+
+        <section>
+          <h2>Testing</h2>
+          <h4>Demo</h4>
         </section>
 
         <section>
