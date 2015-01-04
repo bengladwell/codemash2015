@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <link rel="stylesheet" href="css/reveal.min.css">
-    <link rel="stylesheet" href="css/theme/default.css" id="theme">
+    <link rel="stylesheet" href="css/theme/night.css" id="theme">
 
     <link rel="stylesheet" href="css/codemash2014.css">
 
@@ -471,22 +471,27 @@ module.exports = Backbone.Router.extend({
         <section>
           <h2>Browserify all the things</h2>
           <pre><code class="bash">
-$ npm install --save-dev gulp-browserify
+$ npm install --save-dev browserify
+$ npm install --save-dev vinyl-transform
           </code></pre>
         </section>
 
         <section>
-          <h2>Browserify all the things</h2>
+          <h2>Browserify</h2>
           <p>gulpfile.js</p>
           <pre class="fragment"><code class="js" data-trim>
 ...
-  browserify = require('gulp-browserify');
+  browserify = require('browserify'),
+  transform = require('vinyl-transform'),
 
 ...
 gulp.task('browserify', function () {
   return gulp.src(['src/js/app.js'])
-    .pipe(browserify({
-      debug: true
+    .pipe(transform(function (f) {
+      return browserify({
+        entries: f,
+        debug: true
+      }).bundle();
     }))
     .pipe(gulp.dest('public/js/'));
 });
@@ -698,10 +703,11 @@ $ npm install --save-dev sinon
 describe('routers/App', function () {
   "use strict";
 
-  var AppRouter = require('../routers/App'),
-    LayoutView = require('../views/Layout'),
-    GameView = require('../views/Game'),
-    SettingsView = require('../views/Settings'),
+  var expect = require('chai').expect,
+    AppRouter = require('../../../routers/App'),
+    LayoutView = require('../../../views/Layout'),
+    GameView = require('../../../views/Game'),
+    SettingsView = require('../../../views/Settings'),
     router;
 
   beforeEach(function () {
@@ -717,13 +723,44 @@ describe('routers/App', function () {
       cb();
     });
   });
-...
 });
           </code></pre>
         </section>
 
         <section>
           <h2>Testing</h2>
+          <p>gulpfile.js</p>
+          <pre class="fragment"><code class="js">
+gulp.task('tests', function () {
+  return gulp.src([ 'src/js/tests/**/*.js' ])
+    .pipe(jshint({devel: true, debug: true}))
+    .pipe(jshint.reporter('jshint-stylish'))
+    .pipe(jshint.reporter('fail'))
+    .pipe(transform(function (f) {
+      return browserify({
+        entries: f,
+        debug: true
+      }).bundle();
+    }))
+    .pipe(gulp.dest('tmp/'));
+});
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Testing</h2>
+          <div class="fragment">
+              <p>testem.json</p>
+              <pre><code class="json">
+{
+  "framework": "mocha",
+  "src_files": [
+    "public/js/vendor.js",
+    "tmp/**/*.js"
+  ]
+}
+              </code></pre>
+          </div>
           <div class="fragment">
               <p>package.json</p>
               <pre><code class="json">
@@ -741,10 +778,14 @@ describe('routers/App', function () {
 
         <section>
           <h2>Other considerations</h2>
-          gulp default
-          shrink wrap
-          plumber
-          no-templates
+          <ul>
+            <li>gulp default</li>
+            <li>gulp-plumber</li>
+          </ul>
+        </section>
+
+        <section>
+          <h1>That's it!</h1>
         </section>
 
       </div>
