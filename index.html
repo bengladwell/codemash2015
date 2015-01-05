@@ -116,21 +116,21 @@
 
         <section>
           <h2>5 stages of dealing with frontend tooling</h2>
-          <ul>
-            <li class="fragment">Denial</li>
-            <li class="fragment">Anger</li>
+          <ul class="fragment">
+            <li>Denial</li>
+            <li>Anger</li>
             <aside class="notes">
               Our friend from reddit seemed to be here
             </aside>
-            <li class="fragment">Bargaining</li>
+            <li>Bargaining</li>
             <aside class="notes">
               Custom bash scripts, Codekit, Livereload Chrome extension
             </aside>
-            <li class="fragment">Depression</li>
+            <li>Depression</li>
             <aside class="notes">
               Come to CodeMash
             </aside>
-            <li class="fragment">Acceptance</li>
+            <li>Acceptance</li>
           </ul>
         </section>
 
@@ -155,96 +155,98 @@
         </section>
 
         <section>
-          <h4>Setup</h4>
-          <h2>npm</h2>
-          <pre><code class="bash" data-trim>
-$ npm init
+          <section>
+            <h4>Server setup</h4>
+            <h2>npm</h2>
+            <pre><code class="bash" data-trim>
+  $ npm init
 
-$ npm install --save express
-$ npm install --save express-hbs
-$ npm install --save serve-static
-          </code></pre>
-        </section>
+  $ npm install --save express
+  $ npm install --save express-hbs
+  $ npm install --save serve-static
+            </code></pre>
+          </section>
 
-        <section>
-          <h4>Setup</h4>
-          <h2>package.json</h2>
-          <pre><code class="json" data-trim>
-{
-  "name": "fridgewords",
-  "version": "0.0.1",
-  "description": "CodeMash 2015 - how to do frontend with gulp.js",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/bengladwell/fridgewords.git"
-  },
-  "author": "Ben Gladwell",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/bengladwell/fridgewords/issues"
-  },
-  "homepage": "https://github.com/bengladwell/fridgewords",
-  "dependencies": {
-    "express": "^4.10.6",
-    "express-hbs": "^0.7.11",
-    "serve-static": "^1.7.1"
+          <section>
+            <h4>Setup</h4>
+            <h2>package.json</h2>
+            <pre><code class="json" data-trim>
+  {
+    "name": "fridgewords",
+    "version": "0.0.1",
+    "description": "CodeMash 2015 - how to do frontend with gulp.js",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/bengladwell/fridgewords.git"
+    },
+    "author": "Ben Gladwell",
+    "license": "MIT",
+    "bugs": {
+      "url": "https://github.com/bengladwell/fridgewords/issues"
+    },
+    "homepage": "https://github.com/bengladwell/fridgewords",
+    "dependencies": {
+      "express": "^4.10.6",
+      "express-hbs": "^0.7.11",
+      "serve-static": "^1.7.1"
+    }
   }
-}
-          </code></pre>
-        </section>
+            </code></pre>
+          </section>
 
-        <section>
-          <h4>Simple Express</h4>
-          <h2>index.js</h2>
-          <pre><code class="js" data-trim>
-"use strict";
+          <section>
+            <h4>Simple Express</h4>
+            <h2>index.js</h2>
+            <pre><code class="js" data-trim>
+  "use strict";
 
-var express = require('express'),
-  serveStatic = require('serve-static'),
-  hbs = require('express-hbs'),
-  app = express();
+  var express = require('express'),
+    serveStatic = require('serve-static'),
+    hbs = require('express-hbs'),
+    app = express();
 
-app.engine('hbs', hbs.express3());
-app.set('views', __dirname + '/server/views');
-app.set('view engine', 'hbs');
+  app.engine('hbs', hbs.express3());
+  app.set('views', __dirname + '/server/views');
+  app.set('view engine', 'hbs');
 
-app.use(serveStatic(__dirname + '/public'));
+  app.use(serveStatic(__dirname + '/public'));
 
-app.get('/*', function (req, res, next) {
-  res.render('app');
-});
+  app.get('/*', function (req, res, next) {
+    res.render('app');
+  });
 
-app.listen(3000, 'localhost', function () {
-  console.log('Listening at http://localhost:3000');
-});
-          </code></pre>
-        </section>
+  app.listen(3000, 'localhost', function () {
+    console.log('Listening at http://localhost:3000');
+  });
+            </code></pre>
+          </section>
 
-        <section>
-          <h4>Simple Express</h4>
-          <h2>static HTML</h2>
-          <pre><code class="hbs" data-trim>
-&lt;!doctype html&gt;
-&lt;html lang="en"&gt;
+          <section>
+            <h4>Simple Express</h4>
+            <h2>static HTML</h2>
+            <pre><code class="hbs" data-trim>
+  &lt;!doctype html&gt;
+  &lt;html lang="en"&gt;
 
-  &lt;head&gt;
-    <meta charset='utf-8'/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Fridgewords</title>
-    <link href="/css/app.css" rel="stylesheet" type="text/css">
-  &lt;/head&gt;
+    &lt;head&gt;
+      <meta charset='utf-8'/>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Fridgewords</title>
+      <link href="/css/app.css" rel="stylesheet" type="text/css">
+    &lt;/head&gt;
 
-  &lt;body&gt;
-    <script type="text/javascript" src="/js/vendor.js"></script>
-    <script type="text/javascript" src="/js/app.js"></script>
-  &lt;/body&gt;
+    &lt;body&gt;
+      <script type="text/javascript" src="/js/vendor.js"></script>
+      <script type="text/javascript" src="/js/app.js"></script>
+    &lt;/body&gt;
 
-&lt;/html&gt;
-          </code></pre>
+  &lt;/html&gt;
+            </code></pre>
+          </section>
         </section>
 
         <section>
@@ -329,7 +331,7 @@ $ npm install --save-dev main-bower-files
         </section>
 
         <section>
-          <h4>gruntfile.js</h4>
+          <h4>gulpfile.js</h4>
           <pre><code class="js" data-trim>
 "use strict";
 
@@ -515,87 +517,89 @@ gulp.task('browserify', function () {
         </section>
 
         <section>
-          <h2>Precompiled Templates</h2>
-          <aside class="notes">
-            benefits of precompilation; smaller vendor js, faster app
-          </aside>
-          <h4 class="fragment">Precompiled Handlebars template in Layout View</h4>
-          <pre class="fragment"><code class="js" data-trim>
-var Backbone = window.Backbone,
-  template = require('../templates/layout');
+          <section>
+            <h2>Precompiled Templates</h2>
+            <aside class="notes">
+              benefits of precompilation; smaller vendor js, faster app
+            </aside>
+            <h4 class="fragment">Precompiled Handlebars template in Layout View</h4>
+            <pre class="fragment"><code class="js" data-trim>
+  var Backbone = window.Backbone,
+    template = require('../templates/layout');
 
-module.exports = Backbone.View.extend({
-...
-  render: function () {
-    this.$el.html(template());
-    return this;
+  module.exports = Backbone.View.extend({
+  ...
+    render: function () {
+      this.$el.html(template());
+      return this;
+    }
+
+  });
+            </code></pre>
+            <aside class="notes">
+              assumptions in grunt-contrib-handlebars vs gulp way
+            </aside>
+          </section>
+
+          <section>
+            <h4>Precompiled hbs templates</h4>
+            <h2>hbs runtime on the page</h2>
+            <pre class="fragment"><code class="bash" data-trim>
+  $ bower install --save handlebars
+            </code></pre>
+            <p class="fragment">bower.json</p>
+            <pre class="fragment"><code class="json" data-trim>
+  ...
+  "overrides": {
+    "handlebars": {
+      "main": "handlebars.runtime.js"
+    }
   }
+            </code></pre>
+            <pre class="fragment"><code class="bash" data-trim>
+  $ gulp bower
+            </code></pre>
+          </section>
 
-});
-          </code></pre>
-          <aside class="notes">
-            assumptions in grunt-contrib-handlebars vs gulp way
-          </aside>
-        </section>
+          <section>
+            <h4>Precompiled hbs templates</h4>
+            <h2>gulp</h2>
+            <pre><code class="bash" data-trim>
+  $ npm install --save-dev gulp-handlebars
+  $ npm install --save-dev gulp-wrap
+            </code></pre>
+          </section>
 
-        <section>
-          <h4>Precompiled hbs templates</h4>
-          <h2>hbs runtime on the page</h2>
-          <pre class="fragment"><code class="bash" data-trim>
-$ bower install --save handlebars
-          </code></pre>
-          <p class="fragment">bower.json</p>
-          <pre class="fragment"><code class="json" data-trim>
-...
-"overrides": {
-  "handlebars": {
-    "main": "handlebars.runtime.js"
-  }
-}
-          </code></pre>
-          <pre class="fragment"><code class="bash" data-trim>
-$ gulp bower
-          </code></pre>
-        </section>
+          <section>
+            <h4>Precompiled hbs templates</h4>
+            <h2>gulpfile</h2>
+            <pre><code class="js" data-trim>
+  ...
+    handlebars = require('gulp-handlebars'),
+    wrap = require('gulp-wrap'),
+  ...
+  gulp.task('templates', function () {
+    return gulp.src('src/hbs/**/*.hbs')
+      .pipe(handlebars())
+      .pipe(wrap('module.exports = Handlebars.template(<%= contents %>);'))
+      .pipe(gulp.dest('src/js/templates/'));
+  });
 
-        <section>
-          <h4>Precompiled hbs templates</h4>
-          <h2>gulp</h2>
-          <pre><code class="bash" data-trim>
-$ npm install --save-dev gulp-handlebars
-$ npm install --save-dev gulp-wrap
-          </code></pre>
-        </section>
+  gulp.task('browserify', ['templates'], function () {
+  ...
+            </code></pre>
+          </section>
 
-        <section>
-          <h4>Precompiled hbs templates</h4>
-          <h2>gulp</h2>
-          <pre><code class="js" data-trim>
-...
-  handlebars = require('gulp-handlebars'),
-  wrap = require('gulp-wrap'),
-...
-gulp.task('templates', function () {
-  return gulp.src('src/hbs/**/*.hbs')
-    .pipe(handlebars())
-    .pipe(wrap('module.exports = Handlebars.template(<%= contents %>);'))
-    .pipe(gulp.dest('src/js/templates/'));
-});
-
-gulp.task('browserify', ['templates'], function () {
-...
-          </code></pre>
-        </section>
-
-        <section>
-          <h4>Precompiled hbs templates</h4>
-          <h2>Sample compiled template module</h2>
-          <p>src/hbs/layout.hbs --&gt; src/js/templates/layout.js</p>
-          <pre class="fragment"><code class="js" data-trim>
-module.exports = Handlebars.template({"compiler":[6,"&gt;= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<div class=\"page-header\">\n  <h1>Fridgewords</h1>\n  <div class=\"link-to\"></div>\n</div>\n<div class=\"outlet\">\n</div>\n";
-},"useData":true});
-          </code></pre>
+          <section>
+            <h4>Precompiled hbs templates</h4>
+            <h2>Sample compiled template module</h2>
+            <p>src/hbs/layout.hbs --&gt; src/js/templates/layout.js</p>
+            <pre class="fragment"><code class="js" data-trim>
+  module.exports = Handlebars.template({"compiler":[6,"&gt;= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+    return "<div class=\"page-header\">\n  <h1>Fridgewords</h1>\n  <div class=\"link-to\"></div>\n</div>\n<div class=\"outlet\">\n</div>\n";
+  },"useData":true});
+            </code></pre>
+          </section>
         </section>
 
         <section>
