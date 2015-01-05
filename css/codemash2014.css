@@ -3,6 +3,10 @@
     background-color: #fff;
 }
 
+.reveal .title h3 {
+    margin-top: 80px;
+}
+
 .reveal pre code.js, .reveal pre code.json {
     font-size: 1.4em;
     line-height: 1.2;
@@ -16,4 +20,12 @@
 .reveal pre.directory {
     font-size: 1em;
     line-height: 1.2;
+}
+
+.reveal .bat img {
+    border: none;
+}
+
+.reveal .useful table td {
+    padding: 5px 20px;
 }

@@ -45,8 +45,18 @@
       <!-- Any section element inside of this container is displayed as a slide -->
       <div class="slides">
 
-        <section>
+        <section class="title">
           <h1>Tame Your Frontend Stack with gulp.js</h1>
+          <h3>github.com/bengladwell/codemash2015</h3>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## Me
+            #### twitter.com/bengladwell
+            #### github.com/bengladwell
+            #### bengladwell.com
+          </script>
         </section>
 
         <section>
@@ -72,11 +82,11 @@
           </ul>
         </section>
 
-        <section>
+        <section class="bat">
           <img src="img/bat_moth.jpg" alt="Bat vs Moth">
         </section>
 
-        <section>
+        <section class="useful" data-transition="fade">
           <h3>Useful frontend stuff</h3>
           <table>
             <tr class="fragment"><td>3rd-party JS package management</td><td></td></tr>
@@ -86,21 +96,21 @@
             <tr class="fragment"><td>CSS precompiler</td><td></td></tr>
             <tr class="fragment"><td>Productivity: JS code linting</td><td></td></tr>
             <tr class="fragment"><td>Productivity: Automatic code reloading</td><td></td></tr>
-            <tr class="fragment"><td>Test runner, assertion library, mock library</td><td></td></tr>
+            <tr class="fragment"><td>Test runner, assertion library, mocking</td><td></td></tr>
           </table>
         </section>
 
-        <section>
+        <section class="useful" data-transition="fade">
           <h3>Useful frontend stuff</h3>
           <table>
-            <tr><td>3rd-party JS package management</td><td>Bower</td></tr>
-            <tr><td>JS MV* framework</td><td>Backbone</td></tr>
-            <tr><td>Precompiled templates</td><td>Handlebars</td></tr>
-            <tr><td>JS module system</td><td>CommonJS/Browserify</td></tr>
-            <tr><td>CSS precompiler</td><td>Less</td></tr>
-            <tr><td>Productivity: JS code linting</td><td>JSHint</td></tr>
-            <tr><td>Productivity: Automatic code reloading</td><td>Gulp watch</td></tr>
-            <tr><td>Test runner, assertion library, mocking</td><td>Testem, Mocha, Sinon</td></tr>
+            <tr><td>3rd-party JS package management</td><td><strong>Bower</strong></td></tr>
+            <tr><td>JS MV* framework</td><td><strong>Backbone</strong></td></tr>
+            <tr><td>Precompiled templates</td><td><strong>Handlebars</strong></td></tr>
+            <tr><td>JS module system</td><td><strong>CommonJS / Browserify</strong></td></tr>
+            <tr><td>CSS precompiler</td><td><strong>Less</strong></td></tr>
+            <tr><td>Productivity: JS code linting</td><td><strong>JSHint</strong></td></tr>
+            <tr><td>Productivity: Automatic code reloading</td><td><strong>gulp watch</strong></td></tr>
+            <tr><td>Test runner, assertion library, mocking</td><td><strong>Testem, Chai, Sinon</strong></td></tr>
           </table>
         </section>
 
@@ -134,7 +144,7 @@
         </section>
 
         <section>
-          <h2>Test project</h2>
+          <h2>Demo project</h2>
           <img class="fragment" src="img/beardpoet.jpg" alt="Beard Poet">
           <div class="fragment">
             <a href="https://github.com/bengladwell/fridgewords">github: bengladwell/fridgewords</a>
@@ -229,6 +239,7 @@ app.listen(3000, 'localhost', function () {
   &lt;/head&gt;
 
   &lt;body&gt;
+    <script type="text/javascript" src="/js/vendor.js"></script>
     <script type="text/javascript" src="/js/app.js"></script>
   &lt;/body&gt;
 
@@ -245,7 +256,7 @@ $ npm install --save-dev gulp
         </section>
 
         <section>
-          <h2>Less (lesscss.org)</h2>
+          <h2>Less <span class="fragment">(lesscss.org)</span></h2>
           <pre class="fragment"><code class="bash">
 $ npm install --save-dev gulp-less
           </code></pre>
@@ -377,7 +388,7 @@ $(function () {
         <section>
           <h2>A not-so-good approach</h2>
           <pre class="fragment"><code class="js">
-var App = {};
+window.App = {};
 App.Views = {};
 
 App.Views.AvailableWordsView = Backbone.View.extend({
