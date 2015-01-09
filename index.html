@@ -78,12 +78,11 @@
           <ul>
             <li class="fragment">The web platform is complicated</li>
             <li class="fragment">Node, npm, and the Unix philosophy</li>
-            <li class="fragment">Bats and moths</li>
+            <li class="fragment">Because Javascript people</li>
           </ul>
-        </section>
-
-        <section class="bat">
-          <img src="img/bat_moth.jpg" alt="Bat vs Moth">
+          <aside class="notes">
+            Saxaphone player - marching band vs jazz band
+          </aside>
         </section>
 
         <section class="useful" data-transition="fade">
@@ -147,7 +146,7 @@
           <h2>Demo project</h2>
           <img class="fragment" src="img/beardpoet.jpg" alt="Beard Poet">
           <div class="fragment">
-            <a href="https://github.com/bengladwell/fridgewords">github: bengladwell/fridgewords</a>
+            <h3><a href="https://github.com/bengladwell/fridgewords">github: bengladwell/fridgewords</a></h3>
           </div>
         </section>
 
@@ -259,12 +258,12 @@ $ npm install --save-dev gulp
 
         <section>
           <h2>Less <span class="fragment">(lesscss.org)</span></h2>
-          <pre class="fragment"><code class="bash">
+          <pre class="fragment"><code class="bash" contenteditable>
 $ npm install --save-dev gulp-less
           </code></pre>
           <div class="fragment">
             <p>gulpfile.js</p>
-            <pre><code class="js">
+            <pre><code class="js" contenteditable>
 var gulp = require('gulp'),
   less = require('gulp-less');
 
@@ -296,12 +295,10 @@ gulp.task('less', function () {
           <h2>Goal: automate 3rd-party script assembly</h2>
           <pre class="fragment directory">
 |-- bower_components
-|   |-- backbone
-|   |   `-- backbone.js
-|   |-- underscore
-|   |   `-- underscore.js
+|   |-- jquery-ui
+|   |   `-- bower.json -&gt; jquery-ui.js
 |   `-- jquery
-|      `-- jquery.js
+|      `-- bower.json -&gt; jquery.js
 |
 |-- public
     `-- js
@@ -319,7 +316,7 @@ $ bower init
         </section>
 
         <section>
-          <h2>Bower example: jquery-ui</h2>
+          <h2>Bower example: jQuery UI</h2>
           <pre><code class="bash" data-trim>
 $ bower install --save jquery-ui
           </code></pre>
@@ -653,7 +650,7 @@ $ npm install --save-dev connect-livereload
             <p>index.js</p>
             <pre><code class="js" data-trim>
 ...
-if (app.get('env') === 'development') {
+if (process.env.NODE_ENV === 'development') {
   app.use(require('connect-livereload')());
 }
 ...
@@ -722,7 +719,6 @@ describe('routers/App', function () {
     AppRouter = require('../../../routers/App'),
     LayoutView = require('../../../views/Layout'),
     GameView = require('../../../views/Game'),
-    SettingsView = require('../../../views/Settings'),
     router;
 
   beforeEach(function () {
@@ -748,9 +744,6 @@ describe('routers/App', function () {
           <pre class="fragment"><code class="js">
 gulp.task('tests', function () {
   return gulp.src([ 'src/js/tests/**/*.js' ])
-    .pipe(jshint({devel: true, debug: true}))
-    .pipe(jshint.reporter('jshint-stylish'))
-    .pipe(jshint.reporter('fail'))
     .pipe(transform(function (f) {
       return browserify({
         entries: f,
